@@ -1,0 +1,964 @@
+\documentclass[UTF8]{ctexart}
+
+% font packages
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{stix}
+
+% margin
+\usepackage{geometry}
+\geometry{
+    paper =a4paper,
+    top =3cm,
+    bottom =3cm,
+    left=2cm,
+    right =2cm
+}
+\linespread{1.2}
+
+% more math operators' support
+\usepackage{physics}
+
+% Boldface
+\usepackage{bm}
+
+% Tikz
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% Gaussian Elimination
+\usepackage{gauss}
+
+% Commutative Graph
+\usepackage[all]{xy}
+
+% Comment
+\usepackage{comment}
+
+% Colors
+\usepackage{xcolor}
+
+% 文字颜色的命令
+\newcommand{\tc}[4][white]{{\fcolorbox{#1}{#2}{\textcolor{#3}{#4}}}} % 此命令接受四个参数，第一个参数为边框颜色，默认为白色，第二个参数为文字背景颜色，第三个参数为文字颜色，第四个参数为文字内容。如：\tc[green]{blue}{lime}{Hello,world!}
+
+% Reference support
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan
+} % 请在此处自定义链接的颜色，相当于\textcolor
+
+% Info
+\title{Title}
+\author{Fulcrum4Math}
+\date{\today}
+
+% General
+\DeclareMathOperator{\N}{\mathbb{N}}                    % Set of Natural Numbers
+\DeclareMathOperator{\Z}{\mathbb{Z}}                    % Set of Integers
+\DeclareMathOperator{\Q}{\mathbb{Q}}                    % Set of Rational Numbers
+\DeclareMathOperator{\R}{\mathbb{R}}                    % Set of Real Numbers
+\DeclareMathOperator{\C}{\mathbb{C}}                    % Set of Complex Numbers
+
+\DeclareMathOperator{\Id}{Id}                           % Identity
+
+\DeclareMathOperator{\Ker}{Ker}                         % Kernel of a Homomorphism ($\ker$ is included in package amsmath)
+\DeclareMathOperator{\Image}{Im}                        % Image of a mapping
+
+% Mathematical Logic
+\DeclareMathOperator{\true}{\mathbb{T}}                    % Tautology
+\DeclareMathOperator{\false}{\mathbb{F}}                    % Contradictory Formula
+% Set Theory
+\DeclareMathOperator{\PP}{\mathcal{P}}                  % Power Sets
+\DeclareMathOperator{\card}{card}                       % Cardinality
+
+% Category Theory
+\DeclareMathOperator{\Cat}{\mathcal{C}}                 % Category
+
+\DeclareMathOperator{\Hom}{Hom}                         % Set of Homomorphisms
+\DeclareMathOperator{\End}{End}                         % Set of Endomorphisms
+\DeclareMathOperator{\Aut}{Aut}                         % Set of Automorphisms
+\DeclareMathOperator{\Isom}{Isom}                       % Set of Isomorphisms
+
+\DeclareMathOperator{\Ob}{Ob}                           % Objects of a Category
+\DeclareMathOperator{\Mor}{Mor}                         % Morphisms of a Category
+
+% Abstract Algebra
+
+\DeclareMathOperator{\stab}{stab}
+
+% Topology
+\DeclareMathOperator{\T}{\mathcal{T}}                   % Topology
+
+\DeclareMathOperator{\intr}{int}                        % Interior
+\DeclareMathOperator{\cl}{cl}                           % Closure
+
+\DeclareMathOperator{\U}{\overset{\circ}{\mathit{U}}}   % Deleted Neighbourhood
+
+% Linear Algebra
+
+% \rank is included in package physics.
+% \tr is included in package physics.
+
+\DeclareMathOperator{\K}{\mathbb{K}}                    % Number Field
+\DeclareMathOperator{\F}{\mathbb{F}}                    % Number Field (F)
+
+\DeclareMathOperator{\diag}{\text{diag}}                % Diagonal Matrix
+\DeclareMathOperator{\al}{\bm\alpha}                    % Boldfaced vector alpha
+\DeclareMathOperator{\bt}{\bm\beta}                     % Boldfaced vector beta
+\DeclareMathOperator{\x}{\bm{x}}                        % Boldfaced vector x
+\DeclareMathOperator{\0}{\mathbf{0}}                    % Boldfaced vector x
+
+\newcommand{\Jd}[2]{\mathrm{J}_{#1}{(#2)}}              % Jordan Blocks
+
+% \DeclareMathOperator{\A}{\bm{A}}                    % Boldfaced matrix A
+% \DeclareMathOperator{\B}{\bm{B}}                    % Boldfaced matrix B
+% \DeclareMathOperator{\Cc}{\bm{C}}                   % Boldfaced matrix C
+
+\DeclareMathOperator{\CCol}{Col}                        % Column Space
+\DeclareMathOperator{\RRow}{Row}                        % Row Space
+\DeclareMathOperator{\Null}{Null}                       % Null Space
+\DeclareMathOperator{\rmT}{\mathrm{T}}                  % Transpose
+
+\newcommand{\spn}{\mathrm{span}\text{ }}             % Span
+% The original command `\span` leads to the environment `align` misdirected.
+
+\DeclareMathOperator{\adj}{adj}                         % adj Matrix
+
+\newcommand{\GL}[2]{\mathrm{GL}_{#1}(#2)}               % General Linear Group
+\newcommand{\SL}[2]{\mathrm{SL}_{#1}(#2)}               % Special Linear Group
+
+\DeclareMathOperator{\lcm}{lcm}                         % LCM
+
+\newcommand{\<}{\langle}                                
+\renewcommand{\>}{\rangle}                              % These two for ordinary Hilbert Inner Products <x,y>
+\newcommand{\inprod}[2]{\<#1,#2\>}    % Using $\expval{#1}$ (Included in package physics) can replace \<#1\>.
+\newcommand{\ocinterval}[2]{\left(#1,#2\right]}
+\newcommand{\cointerval}[2]{\left[#1,#2\right)}
+\newcommand{\ccinterval}[2]{\left[#1,#2\right]}
+\newcommand{\oointerval}[2]{\left(#1,#2\right)}
+
+% Mathematical Analysis
+
+\DeclareMathOperator*{\ulim}{\overline{\lim}}
+\DeclareMathOperator*{\llim}{\underline{\lim}}
+\newcommand{\diff}[3]{\left. #1 \right|_{#2}^{#3}}    % This command can be replaced by $\eval{#1}_{#2}^{#3}$ in package physics.
+
+\newcommand{\Ball}[2]{\mathcal{B}\left(#1,#2\right)}	% Open Ball
+
+% Theorem template below copied from https://zhuanlan.zhihu.com/p/763738880
+
+% ————————————————————————————————————自定义颜色————————————————————————————————————
+\definecolor{dfn_green1}{RGB}{0, 156, 39} % 深绿
+\definecolor{dfn_green2}{RGB}{214, 254, 224} % 浅绿
+
+\definecolor{thm_blue1}{RGB}{0, 91, 156} % 深蓝
+\definecolor{thm_blue2}{RGB}{218, 240, 255} % 浅蓝
+
+\definecolor{ppt_pink1}{RGB}{172, 0, 175} % 深粉
+\definecolor{ppt_pink2}{RGB}{255, 237, 255} % 浅粉
+
+\definecolor{crl_orange1}{RGB}{225, 124, 0} % 深橙
+\definecolor{crl_orange2}{RGB}{255, 235, 210} % 浅橙
+
+\definecolor{xmp_purple1}{RGB}{119, 0, 229} % 深紫
+\definecolor{xmp_purple2}{RGB}{239, 223, 255} % 浅紫
+
+\definecolor{cxmp_red1}{RGB}{211, 0, 35} % 深红
+\definecolor{cxmp_red2}{RGB}{255, 214, 220} % 浅红
+
+\definecolor{prf_grey1}{RGB}{120, 120, 120} % 深灰
+\definecolor{prf_grey2}{RGB}{233, 233, 233} % 浅灰
+
+\definecolor{axm_yellow1}{RGB}{192, 192, 0} % 深黄
+\definecolor{axm_yellow2}{RGB}{255, 255, 172} % 浅黄
+
+% 将RGB换为rgb，颜色数值取值范围改为0到1
+% ————————————————————————————————————自定义颜色————————————————————————————————————
+
+% ————————————————————————————————————盒子设置————————————————————————————————————
+
+\usepackage{tcolorbox} % 盒子效果
+\tcbuselibrary{most} % tcolorbox宏包的设置，详见宏包说明文档
+
+% tolorbox提供了tcolorbox环境，其格式如下：
+% 第一种格式：\begin{tcolorbox}[colback=⟨背景色⟩, colframe=⟨框线色⟩, arc=⟨转角弧度半径⟩, boxrule=⟨框线粗⟩]   \end{tcolorbox}
+% 其中设置arc=0mm可得到直角；boxrule可换为toprule/bottomrule/leftrule/rightrule可分别设置对应边宽度，但是设置为0mm时仍有细边，若要绘制单边框线推荐使用第二种格式
+% 方括号内加上title=⟨标题⟩, titlerule=⟨标题背景线粗⟩, colbacktitle=⟨标题背景线色⟩可为盒子加上标题及其背景线
+% 第二种格式：\begin{tcolorbox}[enhanced, colback=⟨背景色⟩, boxrule=0pt, frame hidden, borderline={⟨框线粗⟩}{⟨偏移量⟩}{⟨框线色⟩}]   {\end{tcolorbox}}
+% 将borderline换为borderline east/borderline west/borderline north/borderline south可分别为四边添加框线，同一边可以添加多条
+% 加入breakable属性可以支持盒子拆分到两页中。
+% 偏移量为正值时，框线向盒子内部移动相应距离，负值反之
+
+\newenvironment{dfn_box}{
+    \begin{tcolorbox}[enhanced, colback=dfn_green2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{dfn_green1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{thm_box}{
+    \begin{tcolorbox}[enhanced, colback=thm_blue2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{thm_blue1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{ppt_box}{
+    \begin{tcolorbox}[enhanced, colback=ppt_pink2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{ppt_pink1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{crl_box}{
+    \begin{tcolorbox}[enhanced, colback=crl_orange2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{crl_orange1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{xmp_box}{
+    \begin{tcolorbox}[enhanced, colback=xmp_purple2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{xmp_purple1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{cxmp_box}{
+    \begin{tcolorbox}[enhanced, colback=cxmp_red2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{cxmp_red1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{prf_box}{
+    \begin{tcolorbox}[enhanced, colback=prf_grey2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{prf_grey1},breakable]
+    }
+    {\end{tcolorbox}}
+    
+\newenvironment{axm_box}{
+    \begin{tcolorbox}[enhanced, colback=axm_yellow2, boxrule=0pt, frame hidden,
+        borderline west={0.7mm}{0.1mm}{axm_yellow1},breakable]
+    }
+    {\end{tcolorbox}}
+
+% tcolorbox宏包还提供了\tcbox指令，用于生成行内盒子，可制作高光效果
+
+        % \newcommand{\hl}[1]{
+        %     \tcbox[on line, arc=0pt, colback=hlan!5!white, colframe=hlan!5!white, boxsep=1pt, left=1pt, right=1pt, top=1.5pt, bottom=1.5pt, boxrule=0pt]
+        % {\bfseries \color{hlan}#1}}
+
+% 其中on line将盒子放置在本行（缺失会跳到下一行），boxsep用于控制文本内容和边框的距离，left、right、top、bottom则分别在boxsep的参数的基础上分别控制四边距离
+
+% ————————————————————————————————————盒子设置————————————————————————————————————
+
+% ————————————————————————————————————定理类环境设置————————————————————————————————————
+\newtheoremstyle{MyStyle}{0pt}{}{}{\parindent}{\bfseries}{}{1em}{} % 定义新定理风格。格式如下：
+%\newtheoremstyle{⟨风格名⟩}
+%                {⟨上方间距⟩} % 若留空，则使用默认值
+%                {⟨下方间距⟩} % 若留空，则使用默认值
+%                {⟨主体字体⟩} % 如 \itshape
+%                {⟨缩进长度⟩} % 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
+%                {⟨定理头字体⟩} % 如 \bfseries
+%                {⟨定理头后的标点符号⟩} % 如点号、冒号
+%                {⟨定理头后的间距⟩} % 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
+%                {⟨定理头格式指定⟩} % 一般留空
+% 定理风格决定着由 \newtheorem 定义的环境的具体格式，有三种定理风格是预定义的，它们分别是：
+% plain: 环境内容使用意大利斜体，环境上下方添加额外间距
+% definition: 环境内容使用罗马正体，环境上下方添加额外间距
+% remark: 环境内容使用罗马正体，环境上下方不添加额外间距
+
+\theoremstyle{MyStyle} % 设置定理风格 
+
+% 定义定义环境，格式为\newtheorem{⟨环境名⟩}{⟨定理头文本⟩}[⟨上级计数器⟩]或\newtheorem{⟨环境名⟩}[⟨共享计数器⟩]{⟨定理头文本⟩}，其变体\newtheorem*不带编号
+
+% 以下的每个环境接受参数，请按顺序填入：
+% #1 环境标题（中文）
+
+\newtheorem{axiom}{规则}[section]
+\newenvironment{axm}[2]
+{
+    \begin{axm_box}
+        \begin{axiom}
+            \textbf{#1
+                \ifx\relax#2\relax\else % 检查 #2 是否为空
+                    (#2) % 如果 #2 不为空，渲染 [空格](#2)
+                \fi}
+            \newline
+}
+{
+        \end{axiom}
+    \end{axm_box}
+}
+
+\newtheorem{definition}{对象}[subsection]
+\newenvironment{obj}[4]
+{
+    \begin{dfn_box}
+        \begin{definition}
+            \textbf{#1}
+
+            \textbf{符号: }#2
+                
+            \textbf{类型: }#3
+
+            \textbf{张数: }#4
+}
+{
+        \end{definition}
+    \end{dfn_box}
+}
+
+\newtheorem{mytactic}[definition]{战术}
+\newenvironment{tactic}[4]
+{
+    \begin{thm_box}
+        \begin{mytactic}
+            \textbf{#1}
+
+            \textbf{符号: }#2
+
+            \textbf{作用目标: }#3
+
+            \textbf{使用条件: }#4
+
+            \textbf{使用效果: }
+}
+{
+        \end{mytactic}
+    \end{thm_box}
+}
+
+\newtheorem{example}[definition]{卡牌}
+\newenvironment{crd}[1]
+{
+    \begin{xmp_box}
+        \begin{example}
+            \textbf{#1}
+            \newline
+}
+{
+        \end{example}
+    \end{xmp_box}
+}
+
+\newtheorem{mathematician}{数学家}
+\newenvironment{hero}[3]
+{
+    \begin{cxmp_box}
+        \begin{mathematician}
+            \textbf{#1}
+
+            \textbf{简介: }#2
+            
+            \textbf{算力值: }#3
+
+            \textbf{技能: }
+}
+{
+        \end{mathematician}
+    \end{cxmp_box}
+}
+
+% ————————————————————————————————————定理类环境设置————————————————————————————————————
+    % \newtheorem{xmp}{例}[subsection]
+    % \newtheorem{thm}{定理}[subsection]
+    % \newtheorem{crl}{推论}[thm]
+    % \newtheorem{dfn}[thm]{定义}
+    % \newtheorem{ppt}{性质}[thm]
+    % \newtheorem{lma}[thm]{引理}
+    % \newtheorem{axm}{公理}
+    % \newtheorem{pbm}{题}
+    % \newtheorem*{prf}{证明}
+    % \newtheorem*{ans}{解答}
+
+    % \newtheorem{dfn}{Definition}
+    % \newtheorem{thm}{Theorem}
+    % \newtheorem{lma}{Lemma}
+    % \newtheorem{axm}{Axiom}
+    % \newtheorem{pbm}{Problem}
+    % \newtheorem*{prf}{Proof}
+    % \newtheorem*{ans}{Answer}
+    % English Version
+% ------------------******-------------------
+
+
+
+
+\usepackage{listings}
+\newcommand{\smallsec}[1]{\paragraph{#1.}}
+\lstset{
+    escapeinside={(*@}{@*)},
+}
+
+% Define Colors: 
+\definecolor{leanblue}{RGB}{0,0,255}
+\colorlet{keyword}{leanblue}
+\colorlet{punct}{leanblue}
+
+\definecolor{sorry}{RGB}{255,0,0}
+\definecolor{comment}{RGB}{0,128,0}
+\definecolor{string}{RGB}{163,21,21}
+\definecolor{num}{RGB}{9,134,88}
+
+\definecolor{thname}{RGB}{121,94,38}
+
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+
+\newcommand*{\lean}[1]{\texttt{\color{blue}#1}}
+
+\lstdefinelanguage{lean}{
+    basicstyle=\ttfamily,
+    % Define Keywords: 
+    alsoletter = {\#},
+    keywords = {
+        import, 
+        namespace, 
+        open, 
+        variable, 
+        Prop, 
+        Type, 
+        % Declarations: 
+        protected, 
+        class, 
+        instance, 
+        def, 
+        axiom, 
+        example, 
+        theorem, 
+        lemma, 
+        fun, 
+        by, 
+        % Basics: 
+        \#check, 
+        \#leansearch, 
+        \#eval, 
+        % Tactics: 
+        exact, 
+            % FOL: 
+            intro,
+            intros, 
+            rintro, 
+            apply,
+            apply?, 
+            constructor, 
+            rcases, 
+            obtain, 
+            use, 
+            left, 
+            right, 
+            cases, 
+            case, 
+            by\_cases, 
+            by\_contra, 
+            contrapose, 
+            contrapose!,
+            % Others: 
+            symm, 
+            calc, 
+            unfold, 
+            have, 
+            let, 
+            rw, 
+            at, 
+            change, 
+            show, 
+        }, 
+    keywords = [2]{sorry}, 
+    %
+    numbers=left,
+    numberstyle=\color{num},
+    %
+    % morecomment = [l]{--},
+    moredelim=[l][\color{comment}]{--}, % morecomment -> moredelim, so that Unicode characters can be used in comments. 
+    moredelim=[is][\color{thname}]{\#tm\{}{\}}, 
+    morecomment = [s]{/-}{-/},
+    commentstyle = \color{comment}, 
+    %
+    stringstyle = \color{string}, 
+    %
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+    % Keywords
+        {th\_name}{{{\color{thname}th\_name}}}{7}
+    % Math Symbols
+        {ℕ}{{\ensuremath{\mathbb{N}}}}{1}
+        {ℤ}{{\ensuremath{\mathbb{Z}}}}{1}
+        {ℝ}{{\ensuremath{\mathbb{R}}}}{1}
+        {ℚ}{{\ensuremath{\mathbb{Q}}}}{1}
+        {ℂ}{{\ensuremath{\mathbb{C}}}}{1}
+        {∩}{{\ensuremath{\cap}}}{1}
+        {∪}{{\ensuremath{\cup}}}{1}
+        {⊂}{{\ensuremath{\subseteq}}}{1}
+        {⊆}{{\ensuremath{\subseteq}}}{1}
+        {⊄}{{\ensuremath{\nsubseteq}}}{1}
+        {⊈}{{\ensuremath{\nsubseteq}}}{1}
+        {⊃}{{\ensuremath{\supseteq}}}{1}
+        {⊇}{{\ensuremath{\supseteq}}}{1}
+        {⊅}{{\ensuremath{\nsupseteq}}}{1}
+        {⊉}{{\ensuremath{\nsupseteq}}}{1}
+        {∈}{{\ensuremath{\in}}}{1}
+        {∉}{{\ensuremath{\notin}}}{1}
+        {∋}{{\ensuremath{\ni}}}{1}
+        {∌}{{\ensuremath{\notni}}}{1}
+        {∅}{{\ensuremath{\emptyset}}}{1}
+        {∫}{{\ensuremath{\int}}}{1}
+        {∑}{{\ensuremath{\mathrm{\Sigma}}}}{1}
+        {Π}{{\ensuremath{\mathrm{\Pi}}}}{1}
+        {≤}{{\ensuremath{\leq}}}{1}
+        {≥}{{\ensuremath{\geq}}}{1}
+        {≠}{{\ensuremath{\neq}}}{1}
+        {≈}{{\ensuremath{\approx}}}{1}
+        {≡}{{\ensuremath{\equiv}}}{1}
+        {≃}{{\ensuremath{\simeq}}}{1}
+    % Greek Letters lowercase
+        {α}{{\ensuremath{\mathrm{\alpha}}}}{1}
+        {β}{{\ensuremath{\mathrm{\beta}}}}{1}
+        {γ}{{\ensuremath{\mathrm{\gamma}}}}{1}
+        {δ}{{\ensuremath{\mathrm{\delta}}}}{1}
+        {ε}{{\ensuremath{\mathrm{\varepsilon}}}}{1}
+        {ζ}{{\ensuremath{\mathrm{\zeta}}}}{1}
+        {η}{{\ensuremath{\mathrm{\eta}}}}{1}
+        {θ}{{\ensuremath{\mathrm{\theta}}}}{1}
+        {ι}{{\ensuremath{\mathrm{\iota}}}}{1}
+        {κ}{{\ensuremath{\mathrm{\kappa}}}}{1}
+        {μ}{{\ensuremath{\mathrm{\mu}}}}{1}
+        {ν}{{\ensuremath{\mathrm{\nu}}}}{1}
+        {ξ}{{\ensuremath{\mathrm{\xi}}}}{1}
+        {π}{{\ensuremath{\mathrm{\mathnormal{\pi}}}}}{1}
+        {ρ}{{\ensuremath{\mathrm{\rho}}}}{1}
+        {σ}{{\ensuremath{\mathrm{\sigma}}}}{1}
+        {τ}{{\ensuremath{\mathrm{\tau}}}}{1}
+        {φ}{{\ensuremath{\mathrm{\varphi}}}}{1}
+        {χ}{{\ensuremath{\mathrm{\chi}}}}{1}
+        {ψ}{{\ensuremath{\mathrm{\psi}}}}{1}
+        {ω}{{\ensuremath{\mathrm{\omega}}}}{1}
+    % Greek Letters UPPERCASE
+        {Γ}{{\ensuremath{\mathrm{\Gamma}}}}{1}
+        {Δ}{{\ensuremath{\mathrm{\Delta}}}}{1}
+        {Θ}{{\ensuremath{\mathrm{\Theta}}}}{1}
+        {Λ}{{\ensuremath{\mathrm{\Lambda}}}}{1}
+        {Σ}{{\ensuremath{\mathrm{\Sigma}}}}{1}
+        {Φ}{{\ensuremath{\mathrm{\Phi}}}}{1}
+        {Ξ}{{\ensuremath{\mathrm{\Xi}}}}{1}
+        {Ψ}{{\ensuremath{\mathrm{\Psi}}}}{1}
+        {Ω}{{\ensuremath{\mathrm{\Omega}}}}{1}
+    % Arrows
+        {↦}{{\ensuremath{\mapsto}}}{1}
+        {←}{{\ensuremath{\leftarrow}}}{1}
+        {<-}{{\ensuremath{\leftarrow}}}{1}
+        {→}{{\ensuremath{\rightarrow}}}{1}
+        {->}{{\ensuremath{\rightarrow}}}{1}
+        {↔}{{\ensuremath{\leftrightarrow}}}{1}
+        {<->}{{\ensuremath{\leftrightarrow}}}{1}
+        {⇒}{{\ensuremath{\Rightarrow}}}{1}
+        {⟹}{{\ensuremath{\Longrightarrow}}}{1}
+        {⇐}{{\ensuremath{\Leftarrow}}}{1}
+        {⟸}{{\ensuremath{\Longleftarrow}}}{1}
+        {Σ}{{\ensuremath{\Sigma}}}{1}
+        {Π}{{\ensuremath{\Pi}}}{1}
+        {∀}{{\ensuremath{\forall}}}{1}
+        {∃}{{\ensuremath{\exists}}}{1}
+        {λ}{{\ensuremath{\mathrm{\lambda}}}}{1}
+        {∧}{{\ensuremath{\wedge}}}{1}
+        {∨}{{\ensuremath{\vee}}}{1}
+        {¬}{{\ensuremath{\neg}}}{1}
+        {⊢}{{\ensuremath{\vdash}}}{1}
+        {‖}{{\ensuremath{\|}}}{1}
+    % subscripts
+        {₁}{{\ensuremath{_1}}}{1}
+        {₂}{{\ensuremath{_2}}}{1}
+        {₃}{{\ensuremath{_3}}}{1}
+        {₄}{{\ensuremath{_4}}}{1}
+        {₅}{{\ensuremath{_5}}}{1}
+        {₆}{{\ensuremath{_6}}}{1}
+        {₇}{{\ensuremath{_7}}}{1}
+        {₈}{{\ensuremath{_8}}}{1}
+        {₉}{{\ensuremath{_9}}}{1}
+        {₀}{{\ensuremath{_0}}}{1}
+        {ᵢ}{{\ensuremath{_i}}}{1}
+        {ⱼ}{{\ensuremath{_j}}}{1}
+        {ₐ}{{\ensuremath{_a}}}{1}
+        {⁻¹}{{\ensuremath{^{-1}}}}{1}
+        {¹}{{\ensuremath{^1}}}{1}
+        {ₙ}{{\ensuremath{_n}}}{1}
+        {ₘ}{{\ensuremath{_m}}}{1}
+        {ₚ}{{\ensuremath{_p}}}{1}
+    % Others
+        {↑}{{\ensuremath{\uparrow}}}{1}
+        {↓}{{\ensuremath{\downarrow}}}{1}
+        {⊢}{{\ensuremath{\vdash}}}{1}
+        {|-}{{\ensuremath{\vdash}}}{1}
+        {⊥}{{\ensuremath{\perp}}}{1}
+        {∞}{{\ensuremath{\infty}}}{1}
+        {∂}{{\ensuremath{\partial}}}{1}
+        {√}{{\ensuremath{\sqrt}}}{1}
+        {∘}{{\ensuremath{\circ}}}{1}
+        {×}{{\ensuremath{\times}}}{1}
+        {∆}{{\ensuremath{\triangle}}}{1}
+        {⟨}{{\ensuremath{\color{leanblue}\langle}}}{1}
+        {⟩}{{\ensuremath{\color{leanblue}\rangle}}}{1}
+        {⦃}{{\ensuremath{\color{leanblue}\lBrace}}}{1}
+        {⦄}{{\ensuremath{\color{leanblue}\rBrace}}}{1}
+        {ℒ}{{\ensuremath{\mathscr{L}}}}{1}
+        {·}{{\ensuremath{\cdot}}}{1},
+}
+
+\lstdefinestyle{lean}{
+    language=lean,
+    numbers=none, 
+    keywordstyle=\color{leanblue},
+    keywordstyle=[2]\color{sorry},
+    % frame=none,
+    backgroundcolor=\color{white}, 
+}
+
+
+\begin{document}
+    \begin{center}
+        {\LARGE\textbf{Type-$\alpha$}}
+
+        蒸蒸日上! 
+    \end{center}
+
+    \section{卡牌设置}
+
+    \subsection{对象牌}
+        
+        \begin{obj}
+            {对于任意}
+            {$\forall$}
+            {无}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {存在}
+            {$\exists$}
+            {无}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {蕴含}
+            {$\to$}
+            {无}
+            {16}
+        \end{obj}
+
+        \begin{obj}
+            {合取}
+            {$\land$}
+            {\lean{Prop} $\to$ \lean{Prop} $\to$ \lean{Prop}}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {析取}
+            {$\lor$}
+            {\lean{Prop} $\to$ \lean{Prop} $\to$ \lean{Prop}}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {否定}
+            {$\neg$}
+            {\lean{Prop} $\to$ \lean{Prop}}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {$\alpha$ 类型}
+            {$\alpha$}
+            {\lean{Type}}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {变量 $x$}
+            {$x$}
+            {$\alpha$}
+            {16}
+        \end{obj}
+
+        \begin{obj}
+            {谓词 $P$}
+            {$P$}
+            {$\alpha \to \lean{Prop}$}
+            {4}
+        \end{obj}
+
+        \begin{obj}
+            {证明 $h$}
+            {$h$}
+            {?}
+            {16}
+        \end{obj}
+
+        \begin{obj}
+            {命题 $p$}
+            {$p$}
+            {\lean{Prop}}
+            {8}
+        \end{obj}
+
+        \begin{obj}
+            {命题 $q$}
+            {$q$}
+            {\lean{Prop}}
+            {8}
+        \end{obj}
+
+    \subsection{战术牌}
+        
+        \begin{tactic}
+            {引入}
+            {\lean{intro}}
+            {任意一名玩家的某一个 Goal. }
+            {作用目标的主算子是 ``$\forall$'',  ``$\to$'', 或 ``$\neg$''. }
+            \begin{enumerate}
+                \item 若作用目标具有 $\forall x : \alpha, p$ 的形式, 将目标 Goal 修改为 $p$ 并获得变量 $x : \alpha$; 
+                \item 若作用目标具有 $p \to q$ 的形式, 将目标 Goal 修改为 $q$ 并获得证明 $h : p$; 
+                \item 若作用目标具有 $\neg p$ 的形式, 将目标 Goal 修改为 \lean{False} 并获得证明 $h : p$; 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {予例}
+            {\lean{use}}
+            {任意一名玩家的某一个 Goal. }
+            {作用目标的主算子是 ``$\exists$'', 且自身素材中有 $x : \alpha$. }
+            \begin{enumerate}
+                \item 若作用目标具有 $\exists x : \alpha, p$ 的形式, 将目标 Goal 修改为 $p$, 并移除自身素材中的 $x : \alpha$. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {构造}
+            {\lean{constructor}}
+            {任意一名玩家的某一个 Goal. }
+            {作用目标的主算子是 ``$\land$''. }
+            \begin{enumerate}
+                \item 若作用目标具有 $p \land q$ 的形式, 将目标 Goal 修改为 $p$ 和 $q$ 两个 Goal; 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {析取}
+            {\lean{left} / \lean{right}}
+            {任意一名玩家的某一个 Goal. }
+            {作用目标的主算子是 ``$\lor$''. }
+            \begin{enumerate}
+                \item 若作用目标具有 $p \lor q$ 的形式, 你可以指定将目标 Goal 修改为 $p$ 或是 $q$; 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {引材}
+            {\lean{have}}
+            {自身的素材. }
+            {}
+            \begin{enumerate}
+                \item 获得一个新的证明. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {变量}
+            {\lean{let}}
+            {自身的素材. }
+            {无}
+            \begin{enumerate}
+                \item 直接获得一个 $x : \alpha$. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {应用}
+            {\lean{apply}}
+            {任意. }
+            {提供一个能够与作用目标匹配的主算子为 $\forall$ 或 $\to$ 的证明. }
+            \begin{enumerate}
+                \item 若作用目标是一名玩家的 Goal, 且具有 $q$ 的形式, 提供的证明具有 $h : p \to q$ 或 $h : \forall x : \alpha, q$ 的形式, 那么分别将目标 Goal 修改为 $p$ 或 $\alpha$, 并移除自身素材中的 $h$. 
+                \item 若作用目标是一名玩家的素材, 且具有 $h : p$ 或 $x : \alpha$ 的形式, 提供的证明具有 $h : p \to q$ 或 $h : \forall x : \alpha, q$ 那么将目标素材修改为 $q$, 并移除自身素材中的 $h$. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {获取}
+            {\lean{obtain}}
+            {任意一名玩家的素材. }
+            {}
+            \begin{enumerate}
+                \item 若作用目标是一名玩家的素材, 那么可夺取该素材; 
+                \item 若夺取的素材具有 $p \land q$ 的形式, 可以更改为获得 $h : p$ 与 $h : q$ 两个素材; 
+                \item 若夺取的素材具有 $\exists x : \alpha, p$ 的形式, 可以更改为获得 $h : p$ 与 $x : \alpha$ 两个素材; 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {矛盾}
+            {\lean{contradiction}}
+            {任意一名玩家的 Goal. }
+            {自身素材中有 \lean{False}, 或具有 $h : p\land\neg p$ 形式, 或同时具有 $h_1 : p$ 和 $h_2 : \neg p$ 形式. }
+            \begin{enumerate}
+                \item 直接视为完成目标 Goal 的证明. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {一致}
+            {\lean{exact}}
+            {任意一名玩家的 Goal. }
+            {自身素材中有与目标 Goal 形式完全相同的证明. }
+            \begin{enumerate}
+                \item 直接视为完成目标 Goal 的证明. 
+                \item 若以明置状态发动此战术, 则算力影响效果额外 $+1$ 点. 明置此战术后本回合不能再使用此战术. 
+            \end{enumerate}
+        \end{tactic}
+
+        \begin{tactic}
+            {显然}
+            {\texttt{\color{red}sorry}}
+            {任意一名玩家的 Goal. }
+            {必须以明置状态发动. }
+            \begin{enumerate}
+                \item 直接视为完成目标 Goal 的证明. 
+            \end{enumerate}
+        \end{tactic}
+
+    \subsection{数学家牌}
+        
+        \begin{hero}
+            {Euler}
+            {在数学中, ``Euler'' 是美的代名词. }
+            {3}
+            \begin{enumerate}
+                \item \textbf{至美}: 只能使用 \lean{Exact} 战术证明命题, 但无需亮出战术牌即可获得点数加成. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Cauchy}
+            {最全能高产的数学家之一. }
+            {4}
+            \begin{enumerate}
+                \item \textbf{多面}: 可以保存三张战术牌, 且手牌上限总是等于算力上限而非算力值. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {L'Hospital}
+            {证不出定理没有关系, 可以找缺钱的数学家买一个冠名嘛. }
+            {3}
+            \begin{enumerate}
+                \item \textbf{冠名}: 每轮次可以夺取另外一名玩家的一个证明. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Ramanujan}
+            {总是用惊人的注意力打对手一个措手不及. }
+            {4}
+            \begin{enumerate}
+                \item \textbf{注意}: 使用 \texttt{\color{red}sorry} 战术时, 无需亮出战术牌. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Fermat}
+            {我想到一个绝妙的证明, 可惜页白太小写不下. }
+            {4}
+            \begin{enumerate}
+                \item \textbf{页白}: [限定技] 一轮次之内没有人能改变或证明你的 Goal. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Galois}
+            {一个人应当有勇气在他二十岁时慨然赴死. }
+            {2}
+            \begin{enumerate}
+                \item \textbf{情网}: 你可以指定一位其他玩家为你的情人, 只要其中一人胜利, 另一人也被判为胜利. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Abel}
+            {}
+            {3}
+            \begin{enumerate}
+                \item \textbf{交换}: 在命题合法的情况下, 你可以任意交换两个逻辑算子的顺序. 
+            \end{enumerate}
+        \end{hero}
+
+        \begin{hero}
+            {Russell}
+            {}
+            {3}
+            \begin{enumerate}
+                \item \textbf{悖论}: \lean{contradiction}, \lean{exact False}, \texttt{\color{red}sorry} 对你无效. 
+            \end{enumerate}
+        \end{hero}
+
+    \subsection{其他牌}
+        
+        \begin{crd}
+            {算力牌}
+            正面三个算力点, 反面四个算力点. 
+        \end{crd}
+
+    \section{游戏流程}
+
+    \subsection{约定}
+
+        每当玩家需要随机获得一个对象时, 按照以下流程操作: 
+        \begin{enumerate}
+            \item 从对象牌牌库中获得最上面一张对象牌, 如果不是算子, 则流程直接结束; 
+            \item 如果是算子, 再获得最上面一张对象牌, 尝试将其填入前一张算子的第一个占位格中, 如果不合法, 则尝试将其填入第二个占位格中, 如果仍不合法, 则将其放回牌库底部; 
+            \item 重复上述步骤, 直到所有占位格全部填满为止. 
+        \end{enumerate}
+
+    \subsection{开始阶段}
+
+        \begin{enumerate}
+            \item 每名玩家选择一张数学家牌, 并根据数学家相应的算力值获得相应的算力牌, 放置在自己的算力区中; 
+            \item 每名玩家先获得一张算子对象牌, 接着沿随机获得对象的流程完成对象获得, 放置在 Goal 区域中, 作为证明的主目标, 完成后按顺序继续进行 Goal 初始化, 直到所有玩家都完成为止; 
+            \item 每名玩家抽取两张战术牌放置在战术区中; 
+            \item 每名玩家抽取与算力值等同数量的对象牌作为手牌. 
+        \end{enumerate}
+
+    \subsection{过程阶段}
+        
+        游戏以轮次为单位 (从第一名开始回合的玩家开始自己回合到该玩家下一次开始时记为一个轮次), 每轮次又以回合为单位 (一个玩家完成所有阶段视为一个回合). 每回合分为以下阶段: 
+        \begin{enumerate}
+            \item 准备阶段: 玩家可以选择亮出战术牌以在未来回合获得额外效果 (亮出的牌在使用前不能被替换为其他战术), 或亮出数学家牌以发动数学家技能; 
+            \item 摸牌阶段: 玩家可以选择摸两张对象牌与一张战术牌, 并且可以用一张战术牌顶替掉原来的战术牌, 或是摸四张对象牌. 摸到的对象牌成为手牌. 若牌堆中的牌不够时, 从弃牌堆中洗牌重置牌堆, 直到游戏结束. 
+            \item 出牌阶段: 玩家可以将手牌与素材区内的素材进行组合, 形成新的素材, 或是借助素材使用战术牌. 
+            \item 弃牌阶段: 玩家至多保留等于手牌上限的手牌数, 其他手牌均进入弃牌堆. 默认情况下, 手牌上限与玩家当前算力值相同. 
+        \end{enumerate}
+
+    \section{出局 / 胜利条件}
+        
+    \subsection{出局条件}
+        
+        玩家的 Goal 如果被其他玩家通过 \lean{apply}, \lean{exact}, \lean{contrapose}, \texttt{\color{red}sorry} 中的一种方式证明, 则失去一点算力点, 若被明置的 \lean{exact} 证明则额外失去一点. 
+
+        若玩家的 Goal 被自己证明, 则恢复同等的算力点, 但不可超过算力点上限. 
+
+        每当玩家的 Goal 被证明时, 玩家的 Goal 被立即重置为 \lean{False}. \lean{False} 只能被 \lean{contradiction}, \lean{exact False}, \texttt{\color{red}sorry} 三种方式证明, 这些情况都十分罕见, 因此可以近似认为此时玩家处于无敌状态, 应当立即重新进行 Goal 初始化. 在下一次玩家开始回合时, 该玩家的 Goal 将被重置为新的 Goal. 
+
+        若玩家的算力点降为零, 则该玩家出局. 
+
+    \subsection{胜利条件}
+
+        仅剩最后一名玩家存活时, 该玩家获胜. 
+
+\end{document}
